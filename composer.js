@@ -13,17 +13,9 @@
     "require": {
         "yiisoft/yii2": "*"
     },
-    "config": {
-      "fxp-asset": {
-        "installer-paths": {
-          "npm-asset-library": "vendor/npm",
-          "bower-asset-library": "vendor/bower"
+    "autoload": {
+        "psr-4": {
+            "ivoglent\\media\\manager\\": "src"
         }
-      }
-    },
-    "extra": {
-      "branch-alias": {
-        "dev-master": "develop"
-      }
     }
 }
