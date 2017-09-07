@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel"><?=Yii::t('app', 'Media manager')?></h4>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
@@ -22,15 +22,20 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="media-manager-list">
-                        <div class="container">
+                        <div class="media-container">
                             <?= $this->render('_media_list', ['dataProvider' => $dataProvider])?>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="media-manager-upload">Upload new</div>
+                    <div role="tabpanel" class="tab-pane" id="media-manager-upload">
+                        <div class="media-container">
+                            <?= $this->render('_form', ['model' => $model])?>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="media-manager-apply" class="btn btn-primary">Apply</button>
             </div>
         </div>
     </div>

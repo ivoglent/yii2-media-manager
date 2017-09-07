@@ -11,9 +11,11 @@ namespace ivoglent\media\manager\controllers;
 
 
 use ivoglent\media\manager\models\Media;
+use ivoglent\media\manager\models\MediaFile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\UnauthorizedHttpException;
+use yii\web\UploadedFile;
 
 class ManagerController extends Controller
 {
@@ -33,11 +35,33 @@ class ManagerController extends Controller
     public function actionDialog()
     {
         $user = \Yii::$app->user->identity;
+        $model = new Media();
+        $model->created_by = $user->getId();
         $dataProvider = new ActiveDataProvider([
-            'query' => Media::find()->where(['created_by' => $user->getId()])
+            'query' => Media::find()->where(['created_by' => $user->getId()]),
+            'pagination' => [
+                'pageSize' => 15
+            ]
         ]);
         return $this->renderPartial('dialog', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionUpload()
+    {
+        $model = new MediaFile();
+
+        if (\Yii::$app->request->isPost) {
+            $model->image = UploadedFile::getInstanceByName( 'file');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return "success";
+            }
+        }
     }
 }

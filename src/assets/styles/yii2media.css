@@ -1,0 +1,52 @@
+.yii2-media-list{
+    margin-top: 15px;
+}
+.yii2-media-list .yii2-media-item{
+    width: 130px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+}
+
+.yii2-media-list .yii2-media-item .image{
+    width: 120px;
+    height: 120px;
+    border: 1px #ddd solid;
+    opacity: 0.5;
+}
+.yii2-media-list .yii2-media-item.selected .image{
+    border: 1px #006219 solid;
+    opacity: 1;
+}
+.yii2-media-list .yii2-media-item .image img{
+    max-width: 120px;
+    max-height: 120px;
+}
+.yii2-media-list ul.pagination {
+    width: 100%;
+    margin-top: 25px;
+}
+.yii2-media-upload-form{
+    margin-top: 15px;
+}
+.yii2-media-upload-preview{
+    width: 350px;
+    max-height: 350px;
+    text-align: center;
+}
+.yii2-media-upload-preview img{
+    max-width: 100%!important;
+    max-height: 250px!important;
+}
+.yii2-media-upload-progress{
+    display: none;
+    height: 18px;
+    width: 100%;
+    text-align: left;
+}
+.media-container{
+    padding: 15px;
+    display: inline-block;
+    width: 100%;
+}

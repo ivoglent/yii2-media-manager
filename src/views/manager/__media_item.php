@@ -7,10 +7,17 @@
  *
  * @var \ivoglent\media\manager\models\Media $model
  */
+$attributes = '';
+foreach ($model->getAttributes() as $name => $value) {
+    $value = urlencode($value);
+    $attributes .= (" data-{$name}='{$value}' ");
+}
+$attributes .= (" data-url='" . $model->getUrl() . "' ");
+$attributes .= (" data-thumburl='" . $model->getUrl($model->thumb) . "' ");
 ?>
-<div class="yii2-media-item">
+<div class="yii2-media-item" <?=$attributes?>>
     <div class="image">
-        <img src="<?php $model->getThumbnail()?>" />
+        <img src="<?=$model->getThumbnail()?>" />
     </div>
     <div class="info">
         <h5><?= $model->name?></h5>
