@@ -54,10 +54,12 @@ class ManagerController extends Controller
      */
     public function actionUpload()
     {
-        $model = new MediaFile();
-
         if (\Yii::$app->request->isPost) {
-            $model->image = UploadedFile::getInstanceByName( 'file');
+            $options = isset($_POST['options']) ? $_POST : [];
+            $model = new MediaFile([
+                'options' => $options
+            ]);
+            $model->file = UploadedFile::getInstanceByName( 'file');
             if ($model->upload()) {
                 // file is uploaded successfully
                 return "success";
