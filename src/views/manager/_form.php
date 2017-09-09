@@ -17,6 +17,7 @@
             ]
         ]
     )?>
+    <input type="hidden" name="generateThumbnail" value="1"/>
     <h5>Please select file(s)</h5>
     <div class="col-sm-12">
         <div class="col-sm-6">
@@ -72,6 +73,9 @@
         function upload(input) {
             yii.media.upload(input, function(result){
                 console.log(result);
+                if (result.success) {
+                    yii.media.dialog.reloadItems();
+                }
             }, function(percent){
                 $('.yii2-media-upload-progress .progress-bar').css({width : percent + '%'});
                 $('.yii2-media-upload-progress .info').html(percent + '% completed.');

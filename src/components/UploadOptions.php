@@ -7,9 +7,11 @@
  */
 
 
-namespace ivoglent\media\manager\models;
+namespace ivoglent\media\manager\components;
 
 
+use ivoglent\media\manager\models\Media;
+use ivoglent\media\manager\models\MediaFile;
 use yii\base\Object;
 use yii\web\UploadedFile;
 
@@ -55,7 +57,7 @@ class UploadOptions extends Object
      *
      * @var bool
      */
-    public $resize                      = false;
+    public $resize                      = true;
 
     /**
      * New size of a photo
@@ -81,6 +83,21 @@ class UploadOptions extends Object
      * @var UploadedFile
      */
     public $file;
+
+    /**
+     * UploadOptions constructor.
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        $attrs = get_object_vars($this);
+        foreach ($config as $key => $value) {
+            if (!array_key_exists($key, $attrs)) {
+                unset($config[$key]);
+            }
+        }
+        parent::__construct($config);
+    }
 
     /**
      * Setup default options
@@ -114,5 +131,17 @@ class UploadOptions extends Object
         return $filename;
     }
 
+
+    /**
+     * @param string $default
+     * @return string
+     */
+    public function getFilename($default = '')
+    {
+        if (!empty($this->filename)) {
+            return $this->filename;
+        }
+        return $default;
+    }
 
 }

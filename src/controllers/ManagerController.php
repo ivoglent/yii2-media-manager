@@ -10,10 +10,13 @@
 namespace ivoglent\media\manager\controllers;
 
 
+use ivoglent\media\manager\components\UploadOptions;
+use ivoglent\media\manager\components\UploadResult;
 use ivoglent\media\manager\models\Media;
 use ivoglent\media\manager\models\MediaFile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\Response;
 use yii\web\UnauthorizedHttpException;
 use yii\web\UploadedFile;
 
@@ -55,14 +58,29 @@ class ManagerController extends Controller
     public function actionUpload()
     {
         if (\Yii::$app->request->isPost) {
-            $options = isset($_POST['options']) ? $_POST : [];
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            $options = isset($_POST['options']) ? $_POST['options'] : [];
             $model = new MediaFile([
-                'options' => $options
+                'options' => new UploadOptions($options)
             ]);
             $model->file = UploadedFile::getInstanceByName( 'file');
-            if ($model->upload()) {
+            if ($result = $model->upload()) {
+                /** @var UploadResult $result */
                 // file is uploaded successfully
-                return "success";
+                if ($result->success) {
+                    $media = new Media();
+                    $media->created_by = \Yii::$app->user->getId();
+                    $media->type = $model->options->type;
+                    $media->thumb = $result->thumbnailName;
+                    $media->folder = Media::getCurrentDirectory();
+                    $media->name =$result->fileName;
+                    if ( $media->save() ) {
+                        return $result;
+                    } else {
+                        return $media->getErrors();
+                    }
+                }
+
             }
         }
     }

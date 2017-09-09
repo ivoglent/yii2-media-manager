@@ -29,6 +29,12 @@
     Media.prototype.upload = function (input, success, progress) {
         var fd = new FormData();
         fd.append( 'file', input.files[0] );
+        var options = $(input).closest('form').serializeArray();
+        for (var key in options){
+            var option = options[key];
+            fd.append( 'options[' + option.name + ']', option.value);
+        };
+
         console.log(fd);
         $.ajax({
             xhr: function() {
