@@ -17,9 +17,9 @@ $attributes .= (" data-thumburl='" . $model->getUrl($model->thumb) . "' ");
 ?>
 <div class="yii2-media-item" <?=$attributes?>>
     <div class="image">
-        <img src="<?=$model->getThumbnail()?>" />
+        <img title="<?= $model->name?>" alt="<?= $model->name?>" src="<?=$model->getThumbnail()?>" />
     </div>
-    <div class="info">
+    <div class="info" alt="<?= $model->name?>" title="<?= $model->name?>">
         <h5><?= $model->name?></h5>
         <small><?php echo $model->getTypeName()?></small>
         <small><?php echo $model->getReadableSize()?></small>

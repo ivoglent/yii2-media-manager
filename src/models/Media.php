@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $title
  * @property string $description
- * @property string $type
+ * @property int $type
  * @property string $name
  * @property string $folder
  * @property double $size
@@ -42,12 +42,11 @@ class Media extends \yii\db\ActiveRecord
         return [
             [['type', 'name', 'size', 'created_by'], 'required'],
             [['size'], 'number'],
-            [['privacy', 'created_by'], 'integer'],
+            [['privacy', 'type', 'created_by'], 'integer'],
             [['created_at'], 'safe'],
             [['title', 'thumb'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 500],
-            [['type'], 'string', 'max' => 5],
-            [['folder'], 'string', 'max' => 10],
+            [['folder'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 50],
         ];
     }

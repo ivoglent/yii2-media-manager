@@ -10,6 +10,8 @@
 namespace ivoglent\media\manager\models;
 
 
+use ivoglent\media\manager\components\Helper;
+use ivoglent\media\manager\components\ModelErrors;
 use ivoglent\media\manager\components\Size;
 use ivoglent\media\manager\components\UploadOptions;
 use ivoglent\media\manager\components\UploadResult;
@@ -35,7 +37,7 @@ class MediaFile extends Model
 
 
     protected $allowedExtensions = [
-        'jpg', 'png', 'bmp', 'gif', //Photo file
+        'jpg', 'jpeg', 'png', 'bmp', 'gif', //Photo file
         'doc' , 'docx', 'xls', 'xlsx', 'ppt', 'pptx', // Document files
         'zip', 'tar', '7gz', 'rar', // Compressed files
     ];
@@ -47,7 +49,7 @@ class MediaFile extends Model
     {
         return [
             [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => implode(', ', $this->allowedExtensions)],
-            [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, bmp', 'maxSize' => 1024 * 1024 * 5, 'tooBig' => 'Limit is 5MB'],
+            [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, bmp', 'maxSize' => 1024 * 1024 * 5, 'tooBig' => 'Limit is 5MB'],
         ];
     }
 
@@ -76,7 +78,8 @@ class MediaFile extends Model
     {
         $result = [];
         if ($this->validate()) {
-            $filename = $this->options->getFilename($this->file->name);
+            $fileOrgname = Helper::validateFilename($this->file->name, 40);
+            $filename = $fileOrgname;
             $filePath = Media::getCurrentDirectory() . DIRECTORY_SEPARATOR . $filename;
             $result['originName'] = $this->file->name;
             if ($this->file->saveAs($filePath)) {
@@ -94,9 +97,9 @@ class MediaFile extends Model
                 $result['success'] =  true;
                 $result['fileName'] = $filename;
                 $result['filePath'] = $filePath;
-                $result['size'] = $this->file->size;
+                $result['size'] = filesize($filePath);
                 if ($this->options->generateThumbnail) {
-                    $thumbName = 'thumb_' . $filename;
+                    $thumbName = 'thumb_' . $fileOrgname;
                     $thumbPath = Media::getCurrentDirectory() . DIRECTORY_SEPARATOR . $thumbName;
                     $tsize = new Size($this->options->thumbnailSize);
                     $size    = new \Imagine\Image\Box($tsize->width, $tsize->height);
@@ -114,6 +117,7 @@ class MediaFile extends Model
             }
 
         }
+        $result['error'] = new ModelErrors($this->getErrors());
         return new UploadResult($result);
     }
 }

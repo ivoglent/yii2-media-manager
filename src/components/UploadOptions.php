@@ -109,7 +109,6 @@ class UploadOptions extends Object
         if (!$this->keepFileName) {
             $this->filename = $this->generateNewFilename();
         }
-
         if (empty($this->uploadDirectory)) {
             $this->uploadDirectory = Media::getCurrentDirectory();
         }
@@ -138,10 +137,13 @@ class UploadOptions extends Object
      */
     public function getFilename($default = '')
     {
+        $filename = $default;
         if (!empty($this->filename)) {
-            return $this->filename;
+            $filename = $this->filename;
+        } else {
+            $filename = $this->file->name;
         }
-        return $default;
+        return Helper::validateFilename($filename, 45);
     }
 
 }

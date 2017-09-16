@@ -23,6 +23,9 @@
                 $('.yii2-media-item.selected').removeClass('selected');
                 $(this).addClass('selected');
             });
+            $(document).on('hidden.bs.modal', '#media-manager-dialog', function () {
+                self.dialog.reset();
+            })
         });
     };
 
@@ -144,6 +147,13 @@
                 pushState : false,
                 timeout : 10000
             })
+        },
+        reset : function () {
+            $('#yii2-media-upload-progress .progress-bar').css({ width : '0%'});
+            $('#yii2-media-upload-progress').hide();
+            $('.media-file').prop('disabled', false);
+            $('#yii2-media-upload-error').hide();
+            $('#yii2-media-upload-preview').attr('src', 'about:blank');
         }
     }
     /*Media.prototype.openManagerDialog = function () {

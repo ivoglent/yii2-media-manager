@@ -47,4 +47,9 @@ class UploadResult extends Object
      */
     public $size                    = '';
 
+    /**
+     * @var string
+     */
+    public $error                   = '';
+
 }

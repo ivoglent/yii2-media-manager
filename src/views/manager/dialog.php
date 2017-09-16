@@ -34,8 +34,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="media-manager-apply" class="btn btn-primary">Apply</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="yii-media-delete">Delete (0)</button>
+                <button type="button" id="media-manager-apply" class="btn btn-primary">Apply (0)</button>
             </div>
         </div>
     </div>

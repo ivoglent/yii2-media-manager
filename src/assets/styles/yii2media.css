@@ -1,3 +1,6 @@
+#media-manager-dialog .modal-dialog{
+    max-height: 100%;
+}
 .yii2-media-list{
     margin-top: 15px;
 }
@@ -9,6 +12,10 @@
     cursor: pointer;
 }
 
+.yii2-media-list .yii2-media-item .info {
+    max-width: 120px;
+    overflow: hidden;
+}
 .yii2-media-list .yii2-media-item .image{
     width: 120px;
     height: 120px;
@@ -16,12 +23,17 @@
     opacity: 0.5;
 }
 .yii2-media-list .yii2-media-item.selected .image{
-    border: 1px #006219 solid;
+    border: 3px #1c8c04 solid;
     opacity: 1;
 }
+
 .yii2-media-list .yii2-media-item .image img{
     max-width: 120px;
     max-height: 120px;
+}
+.yii2-media-list .yii2-media-item.selected .image img{
+    max-width: 114px;
+    max-height: 114px;
 }
 .yii2-media-list ul.pagination {
     width: 100%;

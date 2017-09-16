@@ -20,6 +20,9 @@
     <input type="hidden" name="generateThumbnail" value="1"/>
     <h5>Please select file(s)</h5>
     <div class="col-sm-12">
+        <div class="alert alert-danger" style="display: none" id="yii2-media-upload-error">
+
+        </div>
         <div class="col-sm-6">
             <?=$form->field($model, 'name')->fileInput([
                 'style' => 'display:none',
@@ -75,12 +78,21 @@
                 console.log(result);
                 if (result.success) {
                     yii.media.dialog.reloadItems();
+                    yii.media.dialog.reset();
+                } else {
+                    yii.media.dialog.reset();
+                    var _alert = $('#yii2-media-upload-error');
+                    _alert.html(result.errors);
+                    _alert.show();
                 }
+                //$('#yii2-media-upload-form form').first().reset();
             }, function(percent){
                 $('.yii2-media-upload-progress .progress-bar').css({width : percent + '%'});
                 $('.yii2-media-upload-progress .info').html(percent + '% completed.');
             })
         }
+
+
 
     })(jQuery);
 
