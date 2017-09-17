@@ -35,8 +35,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="yii-media-delete">Delete (0)</button>
-                <button type="button" id="media-manager-apply" class="btn btn-primary">Apply (0)</button>
+                <button type="button" class="btn btn-danger" id="yii-media-delete">Delete (<span class="selected-item-count" data-id="">0</span>)</button>
+                <button type="button" id="media-manager-apply" class="btn btn-primary">Apply (<span class="selected-item-count" data-id="">0</span>)</button>
             </div>
         </div>
     </div>

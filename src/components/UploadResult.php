@@ -52,4 +52,10 @@ class UploadResult extends Object
      */
     public $error                   = '';
 
+    /**
+     * Media ID
+     * @var int
+     */
+    public $id                      = 0;
+
 }

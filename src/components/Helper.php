@@ -26,4 +26,19 @@ class Helper
         }
         return $name;
     }
+
+    /**
+     * @param $name
+     * @param int $len
+     * @return string
+     */
+    public static function shortFilename($name, $len = 15)
+    {
+        if (strlen($name) > $len) {
+            $fps = explode('.', $name);
+            $ext = end($fps);
+            $name = substr($name, 0, $len - 7) . '....' . $ext;
+        }
+        return $name;
+    }
 }

@@ -20,8 +20,13 @@
                 self.dialog.show(options);
             });
             $(document).on('click', '.yii2-media-item', function () {
+                var self = this;
                 $('.yii2-media-item.selected').removeClass('selected');
                 $(this).addClass('selected');
+                $('.selected-item-count').each(function (i, e) {
+                    $(e).html(1);
+                    $(e).data('id', $(self).data('id'));
+                });
             });
             $(document).on('hidden.bs.modal', '#media-manager-dialog', function () {
                 self.dialog.reset();
@@ -100,6 +105,14 @@
                 self.hide();
             });
             return this;
+        },
+        select : function (id) {
+            var item = $('.yii2-media-item[data-id="' +id + '"]').first();
+            if (item) {
+                $(item).addClass('selected');
+                var data = $(item).data();
+                this.options.selected = data;
+            }
         },
         show : function (options) {
             this.options = $.extend(options, this.options);

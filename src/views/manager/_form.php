@@ -79,6 +79,7 @@
                 if (result.success) {
                     yii.media.dialog.reloadItems();
                     yii.media.dialog.reset();
+                    yii.media.dialog.select(result.id);
                 } else {
                     yii.media.dialog.reset();
                     var _alert = $('#yii2-media-upload-error');

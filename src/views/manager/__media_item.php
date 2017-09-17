@@ -20,7 +20,7 @@ $attributes .= (" data-thumburl='" . $model->getUrl($model->thumb) . "' ");
         <img title="<?= $model->name?>" alt="<?= $model->name?>" src="<?=$model->getThumbnail()?>" />
     </div>
     <div class="info" alt="<?= $model->name?>" title="<?= $model->name?>">
-        <h5><?= $model->name?></h5>
+        <h5><?= \ivoglent\media\manager\components\Helper::shortFilename($model->name)?></h5>
         <small><?php echo $model->getTypeName()?></small>
         <small><?php echo $model->getReadableSize()?></small>
     </div>

@@ -41,7 +41,7 @@ class ManagerController extends Controller
         $model = new Media();
         $model->created_by = $user->getId();
         $dataProvider = new ActiveDataProvider([
-            'query' => Media::find()->where(['created_by' => $user->getId()]),
+            'query' => Media::find()->where(['created_by' => $user->getId()])->orderBy('id DESC'),
             'pagination' => [
                 'pageSize' => 15
             ]
@@ -77,7 +77,9 @@ class ManagerController extends Controller
                         $media->name =$result->fileName;
                         $media->size = ($result->size);
                         $media->title = $result->fileName;
+
                         if ( $media->save() ) {
+                            $result->id = $media->id;
                             return $result;
                         } else {
                             return [

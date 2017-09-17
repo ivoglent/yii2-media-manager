@@ -10,11 +10,13 @@
     float: left;
     text-align: center;
     cursor: pointer;
+    height: 160px;
 }
 
 .yii2-media-list .yii2-media-item .info {
     max-width: 120px;
     overflow: hidden;
+    max-height: 25px;
 }
 .yii2-media-list .yii2-media-item .image{
     width: 120px;
