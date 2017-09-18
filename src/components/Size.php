@@ -58,7 +58,7 @@ class Size extends Object
      */
     public function resize($width, $height = null)
     {
-        if (preg_match('/^\d+x\d+')) {
+        if (preg_match('/^\d+x\d+$/i', $width)) {
             $sps = explode('x', $width);
             $width = $sps[0];
             if (isset($sps[1]) && is_numeric($sps[1])) {

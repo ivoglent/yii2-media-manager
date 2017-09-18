@@ -31,6 +31,7 @@ if (!isset($value) || empty($value)) {
 <?php else :?>
     <button id="<?="button-$buttonId"?>" class="selected" type="button" data-media-dialog data-show-image="<?="#button-$buttonId"?>" data-target="<?="#input-{$buttonId}"?>">
         <img src="<?=str_replace('primary_', 'thumb_', $value)?>" />
+        <div class="media-selected-hover"><i class="fa fa-pencil"></i> Change</div>
     </button>
 <?php endif;?>
 <?php \yii\widgets\Pjax::end()?>

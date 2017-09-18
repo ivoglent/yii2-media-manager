@@ -101,7 +101,7 @@ class MediaFile extends Model
                 if ($this->options->generateThumbnail) {
                     $thumbName = 'thumb_' . $fileOrgname;
                     $thumbPath = Media::getCurrentDirectory() . DIRECTORY_SEPARATOR . $thumbName;
-                    $tsize = (new Size($filePath))->resize($this->options->thumbnailSize);
+                    $tsize = (new Size(getimagesize($filePath)))->resize($this->options->thumbnailSize);
                     $size    = new \Imagine\Image\Box($tsize->width, $tsize->height);
                     $imagine = new \Imagine\Gd\Imagine();
                     try {
