@@ -40,7 +40,7 @@ class Module extends \yii\base\Module
         }
         if (empty($this->uploadUrl)) {
             $rootPath = \Yii::getAlias('@webroot');
-            $this->uploadUrl = BaseUrl::base(true) . '/' . str_replace($rootPath, '', $this->uploadDir);
+            $this->uploadUrl = '/' . str_replace($rootPath, '', $this->uploadDir);
         }
     }
 }

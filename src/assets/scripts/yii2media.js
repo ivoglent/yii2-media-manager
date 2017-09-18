@@ -17,7 +17,13 @@
         $(document).ready(function(){
             $(document).on('click', '[data-media-dialog]', function () {
                 var options = $(this).data();
-                self.dialog.show(options);
+                $(this).children('i').first().removeClass('fa-plus').addClass('fa-spinner fa-spin')
+                var _self = this;
+                self.dialog.show(options, function(){
+                    $(_self).children('i').first().removeClass('fa-spinner fa-spin').addClass('fa-plus')
+                });
+
+
             });
             $(document).on('click', '.yii2-media-item', function () {
                 var self = this;
@@ -30,7 +36,18 @@
             });
             $(document).on('hidden.bs.modal', '#media-manager-dialog', function () {
                 self.dialog.reset();
-            })
+            });
+            $(document).on('click', '#yii-media-delete', function (e) {
+               e.stopPropagation();
+               e.preventDefault();
+               var deleteItem = $(this).children('.selected-item-count').first();
+               if (deleteItem) {
+                   if (confirm('Do you want to delete this item?')) {
+                       var id = deleteItem.data('id');
+                       self.dialog.deleteItem(id);
+                   }
+               }
+            });
         });
     };
 
@@ -92,7 +109,8 @@
                         src : self.options.selected.thumburl,
                         class : 'yii-media-thumb'
                     });
-                    $(self.options.showImage).html(image);
+                    $(self.options.showImage).html(image).removeClass('btn btn-primary').addClass('selected');
+                    $(self.options.showImage).append('<div class="media-selected-hover"><i class="fa fa-pencil"></i> Change</div>')
                 }
             });
             $(document).on('click', '.yii2-media-item', function () {
@@ -114,7 +132,7 @@
                 this.options.selected = data;
             }
         },
-        show : function (options) {
+        show : function (options, callback) {
             this.options = $.extend(options, this.options);
             var dialog = $('#media-manager-dialog');
             if (dialog.length) {
@@ -129,6 +147,9 @@
                             dialog.modal('show');
                             jQuery(document).pjax("#yii2-media-items a", {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});
                             jQuery(document).on("submit", "#yii2-media-items form[data-pjax]", function (event) {jQuery.pjax.submit(event, {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});});
+                            if (callback) {
+                                callback(response);
+                            }
                         }, 250);
                     }
                 });
@@ -167,6 +188,26 @@
             $('.media-file').prop('disabled', false);
             $('#yii2-media-upload-error').hide();
             $('#yii2-media-upload-preview').attr('src', 'about:blank');
+        },
+        deleteItem : function (id) {
+            $.ajax({
+                type : 'POST',
+                url  : yii.media.configs.baseUrl + '/media/manager/delete',
+                data : {
+                    id : id,
+                    _crsf : yii.getCsrfToken()
+                },
+                success : function (response) {
+                    if (response.code == 200) {
+                        yii.media.dialog.reloadItems();
+                    } else {
+                        alert('An error occurred while processing your request. Please try again later!');
+                    }
+                },
+                error : function (e) {
+                    alert('An error occurred while processing your request. Please try again later!');
+                }
+            });
         }
     }
     /*Media.prototype.openManagerDialog = function () {

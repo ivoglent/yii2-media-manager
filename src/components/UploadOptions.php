@@ -48,7 +48,7 @@ class UploadOptions extends Object
      *
      * @var string
      */
-    public $thumbnailSize               = '120x120';
+    public $thumbnailSize               = '120';
 
     /**
      * Resize origin file to new size
@@ -65,7 +65,7 @@ class UploadOptions extends Object
      *
      * @var string
      */
-    public $resizeTo                    = '1024x1024';
+    public $resizeTo                    = '1024';
 
     /**
      * Origin filename

@@ -4,7 +4,11 @@
  */
 
 $buttonId = substr(md5(microtime()), 0, 6);
-
+if (!isset($value) || empty($value)) {
+    if (isset($model)) {
+        $value = $model->$attribute;
+    }
+}
 ?>
 <?php \yii\widgets\Pjax::begin([
     'id' => 'yii2-media-upload-button',
@@ -16,9 +20,17 @@ $buttonId = substr(md5(microtime()), 0, 6);
         'id' => "input-$buttonId"
     ])?>
 <?php else :?>
-    <?=\yii\helpers\Html::hiddenInput($target, null, [
+    <?=\yii\helpers\Html::hiddenInput($target, $value, [
         'id' => "input-$buttonId"
     ])?>
 <?php endif;?>
-<button id="<?="button-$buttonId"?>" type="button" data-media-dialog data-show-image="<?="#button-$buttonId"?>" data-target="<?="#input-{$buttonId}"?>">Upload</button>
+<?php if (empty($value)) :?>
+    <button id="<?="button-$buttonId"?>" class="btn btn-primary" type="button" data-media-dialog data-show-image="<?="#button-$buttonId"?>" data-target="<?="#input-{$buttonId}"?>">
+        <i class="fa fa-plus"></i>
+    </button>
+<?php else :?>
+    <button id="<?="button-$buttonId"?>" class="selected" type="button" data-media-dialog data-show-image="<?="#button-$buttonId"?>" data-target="<?="#input-{$buttonId}"?>">
+        <img src="<?=str_replace('primary_', 'thumb_', $value)?>" />
+    </button>
+<?php endif;?>
 <?php \yii\widgets\Pjax::end()?>

@@ -39,10 +39,10 @@ class Size extends Object
             ];
         } else {
             $size = explode('x', $size);
-            if (count($size) == 2 && is_numeric($size[0]) && is_numeric($size[1])) {
+            if (count($size) > 0 && is_numeric($size[0])) {
                 $config = [
                     'width'     => $size[0],
-                    'height'    => $size[1]
+                    'height'    => isset($size[1]) ? $size[1] : $size[0]
                 ];
             } else {
                 throw new InvalidConfigException('Invalid size. Allowed array [width, height] or string WIDTHxHEIGHT');
@@ -58,6 +58,13 @@ class Size extends Object
      */
     public function resize($width, $height = null)
     {
+        if (preg_match('/^\d+x\d+')) {
+            $sps = explode('x', $width);
+            $width = $sps[0];
+            if (isset($sps[1]) && is_numeric($sps[1])) {
+                $height = $sps[1];
+            }
+        }
         if (is_null($height)) {
             $height = ($this->height * $width ) / $this->width;
         }

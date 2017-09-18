@@ -64,3 +64,35 @@
     display: inline-block;
     width: 100%;
 }
+
+#yii2-media-upload-button button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+}
+
+#yii2-media-upload-button button.selected {
+    width: 124px;
+    height: auto;
+    padding: 1px;
+    border: 1px #ddd solid;
+    position: relative;
+}
+#yii2-media-upload-button button.selected .media-selected-hover{
+    display: none;
+    width: 124px;
+    height: 124px;
+    background: rgba(255,255,255,0.6);
+    position: absolute;
+    top: 0;
+    left: 0px;
+    right: 0;
+    bottom: 0px;
+    font-size: 13px;
+    padding-top: 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#yii2-media-upload-button button.selected:hover .media-selected-hover {
+    display: block;
+}

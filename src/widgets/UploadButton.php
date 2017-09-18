@@ -19,6 +19,9 @@ class UploadButton extends Widget
      */
     public $attribute;
 
+    /** @var string  */
+    public $value = '';
+
     /**
      * Name of hidden input if you want to use this widget
      * without a model
@@ -51,6 +54,7 @@ class UploadButton extends Widget
             $data['attribute'] = $this->attribute;
         } elseif (!empty($this->target)) {
             $data['target'] = $this->target;
+            $data['value'] = $this->value;
         } else {
             throw new InvalidConfigException('No target for this upload defined');
         }

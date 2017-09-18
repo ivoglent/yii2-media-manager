@@ -97,4 +97,28 @@ class ManagerController extends Controller
             ];
         }
     }
+
+    /**
+     * Delete stored item after user confirmed
+     * 1 - Delete stored record
+     * 2 - Delete related files
+     */
+    public function actionDelete()
+    {
+        if (isset($_POST['id'])) {
+            $id =  $_POST['id'];
+            $model = Media::findOne($id);
+            if (!empty($model) &&  $model->delete()) {
+               \Yii::$app->response->format = Response::FORMAT_JSON;
+               return [
+                   'code' => 200,
+                   'message' => \Yii::t('app',  "The file {$model->name} has been deleted successfully!")
+               ];
+            }
+        }
+        return [
+            'code' => 404,
+            'message' => \Yii::t('app', 'Selected file could not be found')
+        ];
+    }
 }
