@@ -1,3 +1,6 @@
+#media-manager-dialog{
+    z-index: 2147483648;
+}
 #media-manager-dialog .modal-dialog{
     max-height: 100%;
 }

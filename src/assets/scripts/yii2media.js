@@ -93,6 +93,9 @@
         options : {
             selected : {}
         },
+        callback : function (url) {
+            console.log(url);
+        },
         dialogUrl : function () {
             return yii.media.configs.baseUrl + '/media/manager/dialog'
         },
@@ -103,6 +106,8 @@
                 console.log(data);
                 if (self.options.target) {
                     $(self.options.target).val(self.options.selected.url);
+                } else {
+                    self.callback(self.options.selected.url);
                 }
                 if (self.options.showImage) {
                     var image = $('<img>', {
@@ -133,8 +138,12 @@
             }
         },
         show : function (options, callback) {
+            var _self = this;
             this.options = $.extend(options, this.options);
             var dialog = $('#media-manager-dialog');
+            if (callback) {
+                this.callback = callback;
+            }
             if (dialog.length) {
                 dialog.modal('show');
             } else {
@@ -147,9 +156,7 @@
                             dialog.modal('show');
                             jQuery(document).pjax("#yii2-media-items a", {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});
                             jQuery(document).on("submit", "#yii2-media-items form[data-pjax]", function (event) {jQuery.pjax.submit(event, {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});});
-                            if (callback) {
-                                callback(response);
-                            }
+
                         }, 250);
                     }
                 });

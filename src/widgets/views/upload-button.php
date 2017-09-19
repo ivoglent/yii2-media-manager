@@ -15,14 +15,16 @@ if (!isset($value) || empty($value)) {
     'enablePushState' => false,
     'timeout' => 10000
 ])?>
-<?php if(isset($model)) :?>
-    <?=\yii\helpers\Html::activeHiddenInput($model, $attribute, [
-        'id' => "input-$buttonId"
-    ])?>
-<?php else :?>
-    <?=\yii\helpers\Html::hiddenInput($target, $value, [
-        'id' => "input-$buttonId"
-    ])?>
+<?php if ($createElement) :?>
+    <?php if(isset($model)) :?>
+        <?=\yii\helpers\Html::activeHiddenInput($model, $attribute, [
+            'id' => "input-$buttonId"
+        ])?>
+    <?php else :?>
+        <?=\yii\helpers\Html::hiddenInput($target, $value, [
+            'id' => "input-$buttonId"
+        ])?>
+    <?php endif;?>
 <?php endif;?>
 <?php if (empty($value)) :?>
     <button id="<?="button-$buttonId"?>" class="btn btn-primary" type="button" data-media-dialog data-show-image="<?="#button-$buttonId"?>" data-target="<?="#input-{$buttonId}"?>">
