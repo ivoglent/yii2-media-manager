@@ -139,28 +139,27 @@
         },
         show : function (options, callback) {
             var _self = this;
-            this.options = $.extend(options, this.options);
+            this.options = options;
             var dialog = $('#media-manager-dialog');
             if (callback) {
                 this.callback = callback;
             }
             if (dialog.length) {
-                dialog.modal('show');
-            } else {
-                this.init().load().then(function (response) {
-                    if (response) {
-                        $('body').append(response);
-                        setTimeout(function () {
-                            self.loading.hide();
-                            dialog = $('#media-manager-dialog');
-                            dialog.modal('show');
-                            jQuery(document).pjax("#yii2-media-items a", {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});
-                            jQuery(document).on("submit", "#yii2-media-items form[data-pjax]", function (event) {jQuery.pjax.submit(event, {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});});
-
-                        }, 250);
-                    }
-                });
+                dialog.remove();
             }
+            this.init().load().then(function (response) {
+                if (response) {
+                    $('body').append(response);
+                    setTimeout(function () {
+                        //self.loading.hide();
+                        dialog = $('#media-manager-dialog');
+                        dialog.modal('show');
+                        jQuery(document).pjax("#yii2-media-items a", {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});
+                        jQuery(document).on("submit", "#yii2-media-items form[data-pjax]", function (event) {jQuery.pjax.submit(event, {"push":false,"replace":false,"timeout":10000,"scrollTo":false,"container":"#yii2-media-items"});});
+
+                    }, 250);
+                }
+            });
 
         },
         hide : function (options) {
