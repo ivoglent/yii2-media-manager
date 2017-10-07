@@ -2,6 +2,7 @@
 
 namespace ivoglent\media\manager\models;
 
+use ivoglent\media\manager\components\Size;
 use Yii;
 use yii\helpers\BaseUrl;
 
@@ -76,10 +77,10 @@ class Media extends \yii\db\ActiveRecord
     /**
      * @return string
      */
-    public static function getCurrentDirectory()
+    public static function getCurrentDirectory($folder = false)
     {
         $uploadDir = Yii::$app->controller->module->uploadDir;
-        $currentDir = self::currentDir();
+        $currentDir = $folder ? $folder : self::currentDir();
         $dir = $uploadDir .'/' . $currentDir;
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
@@ -139,9 +140,37 @@ class Media extends \yii\db\ActiveRecord
     /**
      * @return string
      */
-    public function getThumbnail()
+    public function getThumbnail($size = null)
     {
-        return $this->getUrl($this->thumb);
+        $file = $this->thumb;
+        if (!empty($size)) {
+            /** @var Size $size */
+            $size = new Size($size);
+            $file = $this->generateThumbnail($size);
+        }
+        return $this->getUrl($file);
+    }
+
+    /**
+     * @param Size $tsize
+     * @return mixed|null
+     */
+    public function generateThumbnail(Size $tsize) {
+        $thumbName = str_replace('thumb_', 'thumb_' . $tsize->width . 'x' . $tsize->height, $this->thumb );
+        $thumbPath = Media::getCurrentDirectory($this->folder) . DIRECTORY_SEPARATOR . $thumbName;
+        if (!file_exists($thumbPath)) {
+            $size    = new \Imagine\Image\Box($tsize->width, $tsize->height);
+            $imagine = new \Imagine\Gd\Imagine();
+            try {
+                $imagine->open($filePath)->thumbnail($size)->save($thumbPath);
+            } catch (\Exception $e) {
+                //Nothing to do
+                \Yii::$app->log->logger->log($e);
+                return null;
+            }
+        }
+        return $thumbName;
+
     }
 
     public function getTypeName()
