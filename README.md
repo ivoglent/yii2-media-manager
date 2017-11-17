@@ -4,7 +4,7 @@
 ## Installation
 ```code
 	componser require "ivoglent/yii2-media-manager" --prefer-dist
-``
+```
 
 Then run migration :
 ```code
