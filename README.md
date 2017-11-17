@@ -3,10 +3,11 @@
 
 ## Installation
 ```code
-	componser require "ivoglent/yii2-media-manager" --prefer-dist
+componser require "ivoglent/yii2-media-manager" --prefer-dist
 ```
 
 Then run migration :
+
 ```code
-	php yii migrate/up --migrationPath=@vendor/ivoglent/media/migrations
+./yii migrate/up  --migrationPath=@vendor/ivoglent/yii2-media-manager/src/migrations 
 ```
