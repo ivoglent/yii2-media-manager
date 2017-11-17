@@ -13,7 +13,7 @@ class m171118_044112_create_media_table extends Migration
     public function safeUp()
     {
         $table = file_get_contents(dirname(__FILE__) . '/media.sql');
-        return $this->db->createCommand()->execute($table);
+        return $this->db->createCommand($table)->execute();
     }
 
     /**
@@ -29,7 +29,7 @@ class m171118_044112_create_media_table extends Migration
     public function up()
     {
         $table = file_get_contents(dirname(__FILE__) . '/media.sql');
-        return $this->db->createCommand()->execute($table);
+        return $this->db->createCommand($table)->execute();
     }
 
     public function down()

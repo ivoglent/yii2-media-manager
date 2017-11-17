@@ -30,16 +30,17 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `media`;
 CREATE TABLE `media` (
-  `id` int(11) NOT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  `type` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `folder` varchar(20) NOT NULL,
-  `size` float NOT NULL,
-  `thumb` varchar(100) DEFAULT NULL,
-  `privacy` int(11) DEFAULT '0',
-  `meta_data` text,
-  `created_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `title` varchar(100) DEFAULT NULL,
+ `description` varchar(500) DEFAULT NULL,
+ `type` int(11) NOT NULL,
+ `name` varchar(50) NOT NULL,
+ `folder` varchar(20) NOT NULL,
+ `size` float NOT NULL,
+ `thumb` varchar(100) DEFAULT NULL,
+ `privacy` int(11) DEFAULT '0',
+ `meta_data` text,
+ `created_by` int(11) NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
